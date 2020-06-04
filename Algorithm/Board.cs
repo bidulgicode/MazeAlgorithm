@@ -9,8 +9,13 @@ namespace Algorithm
     {
         const char CIRCLE = '\u25cf';
 
-        public TileType[,] _tile;
-        public int _size;
+        public TileType[,] Tile { get; private set; }
+        public int Size { get; private set; }
+
+        public int DestX { get; private set; }
+        public int DestY { get; private set; }
+
+        Player _player;
 
         public enum TileType
         {
@@ -18,64 +23,125 @@ namespace Algorithm
             Wall,
         }
 
-        public void Initialize(int size)
+        public void Initialize(int size, Player player)
         {
             if (size % 2 == 0)
                 return;
 
-            _tile = new TileType[size, size];
-            _size = size;
+            _player = player;
+
+            Tile = new TileType[size, size];
+            Size = size;
+
+            DestX = Size - 2;
+            DestY = Size - 2;
 
             // Make Mazes
-            GenetareByBinaryTree();
+            // GenetareByBinaryTree();
+            GenerateBySideWinder();
         }
 
-        private void GenetareByBinaryTree()
+        private void GenerateBySideWinder()
         {
-
             // 길을 다 막고
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
-                        _tile[y, x] = TileType.Wall;
+                        Tile[y, x] = TileType.Wall;
                     else
-                        _tile[y, x] = TileType.Empty;
+                        Tile[y, x] = TileType.Empty;
                 }
             }
 
             // 랜덤으로 뚫어
             Random rand = new Random();
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                int count = 1; // 우측으로 연속된 점의 개수
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
                         continue; // 기존에 막았던 부분은 패스
 
-                    if (y == _size - 2 && x == _size - 2) // 마지막 점
+                    if (y == Size - 2 && x == Size - 2) // 마지막 점
                         continue;
 
-                    if (y == _size - 2)
+                    if (y == Size - 2)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         continue;
                     }
 
-                    if (x == _size - 2)
+                    if (x == Size - 2)
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                         continue;
                     }
 
                     if (rand.Next(0, 2) == 0) // 0~1
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        // 우측으로 뚫는다
+                        Tile[y, x + 1] = TileType.Empty;
+                        count++;
                     }
                     else
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        // 아래로 뚫는다
+                        int randomIndex = rand.Next(0, count); // 0~count-1
+                        Tile[y + 1, x - randomIndex * 2] = TileType.Empty;
+                        count = 1;
+                    }
+                }
+            }
+        }
+
+        private void GenetareByBinaryTree()
+        {
+            // 길을 다 막고
+            for (int y = 0; y < Size; y++)
+            {
+                for (int x = 0; x < Size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        Tile[y, x] = TileType.Wall;
+                    else
+                        Tile[y, x] = TileType.Empty;
+                }
+            }
+
+            // 랜덤으로 뚫어
+            Random rand = new Random();
+            for (int y = 0; y < Size; y++)
+            {
+                for (int x = 0; x < Size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        continue; // 기존에 막았던 부분은 패스
+
+                    if (y == Size - 2 && x == Size - 2) // 마지막 점
+                        continue;
+
+                    if (y == Size - 2)
+                    {
+                        Tile[y, x + 1] = TileType.Empty;
+                        continue;
+                    }
+
+                    if (x == Size - 2)
+                    {
+                        Tile[y + 1, x] = TileType.Empty;
+                        continue;
+                    }
+
+                    if (rand.Next(0, 2) == 0) // 0~1
+                    {
+                        Tile[y, x + 1] = TileType.Empty;
+                    }
+                    else
+                    {
+                        Tile[y + 1, x] = TileType.Empty;
                     }
                 }
             }
@@ -85,11 +151,18 @@ namespace Algorithm
         {
             ConsoleColor prevColor = Console.ForegroundColor;
 
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
-                    Console.ForegroundColor = GetTileColor(_tile[y, x]);
+                    // 플레이어 좌표를 갖고 와서, 그 좌표에 해당하는 맵 좌표를 플레이어 색상으로 변경
+                    if (y == _player.PosY && x == _player.PosX)
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    else if (y == DestY && x == DestX)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    else
+                        Console.ForegroundColor = GetTileColor(Tile[y, x]);
+                    
                     Console.Write(CIRCLE);
                 }
                 Console.WriteLine();
