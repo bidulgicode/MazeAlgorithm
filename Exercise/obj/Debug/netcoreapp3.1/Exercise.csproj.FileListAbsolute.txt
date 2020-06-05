@@ -1,0 +1,11 @@
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.exe
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.deps.json
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.runtimeconfig.json
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.runtimeconfig.dev.json
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.dll
+C:\Users\user\source\repos\Algorithm\Exercise\bin\Debug\netcoreapp3.1\Exercise.pdb
+C:\Users\user\source\repos\Algorithm\Exercise\obj\Debug\netcoreapp3.1\Exercise.csprojAssemblyReference.cache
+C:\Users\user\source\repos\Algorithm\Exercise\obj\Debug\netcoreapp3.1\Exercise.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\Algorithm\Exercise\obj\Debug\netcoreapp3.1\Exercise.AssemblyInfo.cs
+C:\Users\user\source\repos\Algorithm\Exercise\obj\Debug\netcoreapp3.1\Exercise.dll
+C:\Users\user\source\repos\Algorithm\Exercise\obj\Debug\netcoreapp3.1\Exercise.pdb

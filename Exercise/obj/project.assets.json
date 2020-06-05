@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj",
-      "projectName": "Algorithm",
-      "projectPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj",
+      "projectUniqueName": "C:\\Users\\user\\source\\repos\\Algorithm\\Exercise\\Exercise.csproj",
+      "projectName": "Exercise",
+      "projectPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Exercise\\Exercise.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\obj\\",
+      "outputPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Exercise\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
