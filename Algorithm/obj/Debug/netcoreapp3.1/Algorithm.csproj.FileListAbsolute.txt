@@ -9,3 +9,14 @@ C:\Users\user\source\repos\Algorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm
 C:\Users\user\source\repos\Algorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.AssemblyInfo.cs
 C:\Users\user\source\repos\Algorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.dll
 C:\Users\user\source\repos\Algorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.pdb
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.exe
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.deps.json
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.runtimeconfig.json
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.runtimeconfig.dev.json
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.dll
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\bin\Debug\netcoreapp3.1\Algorithm.pdb
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.csprojAssemblyReference.cache
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.AssemblyInfoInputs.cache
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.AssemblyInfo.cs
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.dll
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.pdb
