@@ -40,6 +40,7 @@ namespace Algorithm
             BFS();
         }
 
+        // BFS로 길찾기는 모든 간선의 가중치가 동일해야만 가능
         void BFS()
         {
             // up, left, down, right

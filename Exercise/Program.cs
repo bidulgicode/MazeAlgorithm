@@ -8,25 +8,88 @@ namespace Exercise
         class Graph
         {
             // 3과 4 노드가 끊겨있다.
+            // 0과 1이 아닌 가중치 값으로 수정 -> 다익스트라
             int[,] adj = new int[6, 6]
             {
-                { 0, 1, 0, 1, 0, 0 },
-                { 1, 0, 1, 1, 0, 0 },
-                { 0, 1, 0, 0, 0, 0 },
-                { 1, 1, 0, 0, 1, 0 },
-                { 0, 0, 0, 1, 0, 1 },
-                { 0, 0, 0, 0, 1, 0 },
+                { -1, 15, -1, 35, -1, -1 },
+                { 15, -1, 5, 10, -1, -1 },
+                { -1, 5, -1, -1, -1, -1 },
+                { 35, 10, -1, -1, 5, -1 },
+                { -1, -1, -1, 5, -1, 15},
+                { -1, -1, -1, -1, 5, -1 },
             };
 
-            List<int>[] adj2 = new List<int>[]
+            public void Dijkstra(int start)
             {
-                new List<int>() { 1, 3 },
-                new List<int>() { 0, 2, 3 },
-                new List<int>() { 1 },
-                new List<int>() { 0, 1, 4 },
-                new List<int>() { 3, 5 },
-                new List<int>() { 4 },
-            };
+                // 노드를 찾아낸것보다 실제로 방문했는가가 중요함
+                bool[] visited = new bool[6];
+                // 최단거리 저장
+                int[] distance = new int[6];
+                int[] parent = new int[6]; // 경로 추적용
+
+                Array.Fill(distance, Int32.MaxValue);
+
+                distance[start] = 0;
+                parent[start] = start;
+
+                // 이 부분이 이중포문마냥 돌아서 겁나 느림
+                while (true)
+                {
+                    // 제일 좋은 후보를 찾는다 (가장 가까이에 있는 놈)
+
+                    // 가장 유력한 후보의 거리와 번호를 저장
+                    int closest = Int32.MaxValue;
+                    int now = -1;
+
+                    for(int i = 0; i < 6; i++)
+                    {
+                        // 이미 방문한 정점은 스킵한다.
+                        if (visited[i])
+                            continue;
+                        // 아직 발견된(예약) 적이 없거나, 기존 후보보다 멀다면 스킵
+                        if (distance[i] == Int32.MaxValue || distance[i] >= closest)
+                            continue;
+                        // 여기까지 오면 가장 좋은 후보라는 의미
+                        closest = distance[i];
+                        now = i;
+                    }
+                    // for문 이후에 closest와 now는 가장 좋은 값이 되어있다 or 변화없음.
+
+                    // 다음 후보가 하나도 없다 -> 종료
+                    // 모든 점을 찾아봤거나, 단절되어 있다.
+                    if (now == -1)
+                        break;
+
+                    // 제일 좋은 후보를 찾았음. -> 방문
+                    visited[now] = true;
+                    
+                    // 방문한 정점과 인접한 정점들을 조사해서
+                    // 상황에 따라 발견한 최단거리를 갱신
+                    for(int next = 0; next < 6; next++)
+                    {
+                        // 연결되지 않은 정점은 스킵
+                        if (adj[now, next] == -1)
+                            continue;
+                        // 이미 방문한 정점은 스킵
+                        if (visited[next])
+                            continue;
+
+                        // 여기까지 오면 연결되어있고 방문한적이 없는 정점임
+                        // 새로 조사된 정점의 최단거리를 계산한다.
+                        int nextDist = distance[now] + adj[now, next];
+                        // 만약 기존에 발견된 최단거리가 새로 조사된 최단거리보다 크면
+                        // 정보를 갱신
+                        if(nextDist < distance[next])
+                        {
+                            // 초기값일 경우에는 어마어마하게 크니 무조건 갱신됨.
+                            distance[next] = nextDist;
+                            // next라는 정점은 now를 통해 발견된 것이다.
+                            parent[start] = now;
+                        }
+                        
+                    }
+                }
+            }
 
             //선입선출 BFS -> Queue
             public void BFS(int start)
