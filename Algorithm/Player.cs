@@ -36,6 +36,72 @@ namespace Algorithm
             PosX = posX;
             _board = board;
 
+            // RightHand();
+            BFS();
+        }
+
+        void BFS()
+        {
+            // up, left, down, right
+            int[] deltaY = new int[] { -1, 0, 1, 0 };
+            int[] deltaX = new int[] { 0, -1, 0, 1 };
+
+            bool[,] found = new bool[_board.Size, _board.Size];
+            Pos[,] parent = new Pos[_board.Size, _board.Size];
+
+            Queue<Pos> q = new Queue<Pos>();
+            q.Enqueue(new Pos(PosY, PosX));
+            found[PosY, PosX] = true;
+            // 시작점은 자기 자신이 부모
+            parent[PosY, PosX] = new Pos(PosY, PosX);
+
+            while(q.Count > 0)
+            {
+                Pos pos = q.Dequeue();
+                int nowY = pos.Y;
+                int nowX = pos.X;
+
+                // 자기 기준으로 상하좌우 확인
+                for(int i = 0; i < 4; i++)
+                {
+                    int nextY = nowY + deltaY[i];
+                    int nextX = nowX + deltaX[i];
+
+                    // 배열 범위를 벗어나지 않게 조심
+                    if (nextX < 0 || nextX >= _board.Size || nextY < 0 || nextY >= _board.Size)
+                        continue;
+                    
+                    if (_board.Tile[nextY, nextX] == Board.TileType.Wall)
+                        continue;
+                    if (found[nextY, nextX])
+                        continue;
+
+                    q.Enqueue(new Pos(nextY, nextX));
+                    found[nextY, nextX] = true;
+                    parent[nextY, nextX] = new Pos(nowY, nowX); // 새로 방문하게될 지점의 부모
+                }
+            }
+            // 여기까지 하면 경로상 모든 점의 부모 위치 저장됨.
+
+            // 목적지로부터 시작점까지 거슬러올라감
+            int y = _board.DestY;
+            int x = _board.DestX;
+            while(parent[y, x].Y != y || parent[y, x].X != x)
+            {
+                _points.Add(new Pos(y, x));
+                // 부모노드 좌표로 이동
+                Pos pos = parent[y, x];
+                y = pos.Y;
+                x = pos.X;
+            }
+            // 여기서의 y, x좌표는 시작점
+            _points.Add(new Pos(y, x)); // 끝점에 도달하는 순간 _points에 add를 안하고 빠져나오기 때문에
+            // 역순서로 들어왔으니 뒤집자
+            _points.Reverse();
+        }
+
+        private void RightHand()
+        {
             // 현재 바라보고 있는 방향을 기준으로, 좌표 변화를 나타낸다. 
             // 위, 왼, 아래, 오 순서
             int[] frontY = new int[] { -1, 0, 1, 0 };
@@ -45,7 +111,7 @@ namespace Algorithm
 
             _points.Add(new Pos(PosY, PosX));
             // 목적지 도착하기 전에는 계속 실행
-            while (PosY != board.DestY || PosX != board.DestX)
+            while (PosY != _board.DestY || PosX != _board.DestX)
             {
                 // 내가 바라보는 방향에 따라 오른쪽의 기준이 달라진다.
                 // 1. 현재 바라보는 방향을 기준으로 오른쪽으로 갈 수 있는지 확인.
