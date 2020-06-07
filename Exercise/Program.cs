@@ -28,48 +28,36 @@ namespace Exercise
                 new List<int>() { 4 },
             };
 
-            bool[] visited = new bool[6];
-            // 1. now 부터 방문
-            // 2. now와 연결된 정점들을 하나씩 확인해사, 아직 미방문 상태라면 방문.
-            public void DFS(int now)
+            //선입선출 BFS -> Queue
+            public void BFS(int start)
             {
-                Console.WriteLine(now);
-                visited[now] = true; // 1. now부터 방문.
+                bool[] found = new bool[6];
+                int[] parent = new int[6];
+                int[] distance = new int[6];
 
-                // adj.GetLength(0); == 6
-                for(int next = 0; next < 6; next++)
+                Queue<int> q = new Queue<int>();
+                q.Enqueue(start);
+                found[start] = true;
+                parent[start] = start;
+                distance[start] = 0;
+
+                while(q.Count > 0)
                 {
-                    if (adj[now, next] == 0)
-                        continue;   // 연결되지 않았다면 스킵.
-                    if (visited[next]) // 이미 방문했다면 스킵.
-                        continue;
-                    DFS(next); // 나와 연결된 정점에도 같은 일 수행
+                    int now = q.Dequeue();
+                    Console.WriteLine(now);
+
+                    for(int next = 0; next < 6; next++)
+                    {
+                        if (adj[now, next] == 0) // 인접하지 않은 노드면 스킵
+                            continue;
+                        if (found[next]) // 이미 방문한 노드면 스킵
+                            continue;
+                        q.Enqueue(next);
+                        found[next] = true;
+                        parent[next] = now;
+                        distance[next] = distance[now] + 1;
+                    }
                 }
-            }
-
-            public void DFS2(int now)
-            {
-                Console.WriteLine(now);
-                visited[now] = true;
-
-                foreach (var next in adj2[now]) // 연결된 것들만 넣어놨기 때문에 따로 체크할 필요가 없음.
-                {
-                    if (visited[next]) // 이미 방문했다면 스킵.
-                        continue;
-                    DFS2(next);
-                }
-            }
-
-            // 정점 연결이 끊겨있는 경우 그 정점은 DFS 재귀를 통해 호출되지 않기 때문에
-            // 찾아서 호출해줘야함.
-            public void SearchAll() 
-            {
-                visited = new bool[6];
-                for (int now = 0; now < 6; now++)
-                    // DFS를 실행하는 순간 연결되어있던 
-                    // 모든 정점은 ture가 되기 때문에 의외로 체크를 적게 한다.
-                    if (visited[now] == false) 
-                        DFS(now);
             }
         }
         // 스택 : LIFO
@@ -78,10 +66,11 @@ namespace Exercise
         {
             // DFS 깊이우선
             Graph graph = new Graph();
-            //graph.DFS(3); // 시작점에 따라 탐색순서가 달라짐.
-            graph.SearchAll();
+            // graph.DFS(3); // 시작점에 따라 탐색순서가 달라짐.
+            // graph.SearchAll();
             
-            // BFS 너비우선
+            // BFS 너비우선 -길찾기에 주로 사용됨
+            graph.BFS(0);
 
         }
     }
