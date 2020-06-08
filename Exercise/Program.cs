@@ -9,9 +9,10 @@ namespace Exercise
         // 부모가 누군지는 모르는 Children
         public List<TreeNode<T>> Children { get; set; } = new List<TreeNode<T>>();
     }
+
     class Program
     {
-        static void Main(string[] args)
+        static TreeNode<string> MakeTree()
         {
             TreeNode<string> root = new TreeNode<string>() { Data = "R1 개발실" };
             {
@@ -36,6 +37,44 @@ namespace Exercise
                     root.Children.Add(node);
                 }
             }
+            return root;
+        }
+
+        static void PrintTree(TreeNode<string> root)
+        {
+            // 트리의 모든노드를 다 순회하려면? -> 재귀가 편하다.
+            // 일단 나부터 출력
+            Console.WriteLine(root.Data);
+
+            // 자식들도 출력하도록 떠넘김
+            foreach (TreeNode<string> child in root.Children)
+                PrintTree(child);   // 재귀
+        }
+
+
+        // 트리 높이 구하기는 코딩문제로 내기 좋다.
+        static int GetHeight(TreeNode<string> root)
+        {
+            int height = 0;
+
+            foreach (TreeNode<string> child in root.Children)
+            {
+                int newHeight = GetHeight(child) + 1;
+                if (height < newHeight)
+                    height = newHeight;
+                // 위 if문과 동일함
+                // height = Math.Max(height, newHeight);
+            }
+            
+            return height;
+        }
+
+        static void Main(string[] args)
+        {
+            TreeNode<string> root = MakeTree();
+
+            //PrintTree(root);
+            Console.WriteLine(GetHeight(root));
         }
     }
 }
