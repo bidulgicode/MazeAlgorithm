@@ -3,78 +3,99 @@ using System.Collections.Generic;
 
 namespace Exercise
 {
-    class TreeNode<T>
+    class PriorityQueue
     {
-        public T Data { get; set; }
-        // 부모가 누군지는 모르는 Children
-        public List<TreeNode<T>> Children { get; set; } = new List<TreeNode<T>>();
+        List<int> _heap = new List<int>();
+
+        public void Push(int data)
+        {
+            // 힙의 맨 끝에 새로운 데이터를 삽입
+            _heap.Add(data);
+
+            // 힙의 맨 위로 올려보자 (가능하다면)
+            int now = _heap.Count - 1;
+            while(now > 0)
+            {
+                int next = (now - 1) / 2; // 부모 인덱스 구하기
+                if (_heap[now] < _heap[next])
+                    break; // 부모보다 작아서 못올라간다.
+
+                // 크다면 교체
+                int temp = _heap[now];
+                _heap[now] = _heap[next];
+                _heap[next] = temp;
+
+                // 검사 위치를 이동
+                now = next;
+            }
+        }
+
+        // 가장 큰 데이터를 넘긴다.
+        public int Pop()
+        {
+            // 반환할 데이터를 따로 저장
+            int ret = _heap[0];
+
+            // 마지막 데이터를 루트로 이동.
+            int lastIndex = _heap.Count - 1;
+            _heap[0] = _heap[lastIndex];
+            _heap.RemoveAt(lastIndex);
+            lastIndex--;
+
+            // 역으로 내려가기
+            int now = 0;
+            while (true)
+            {
+                // left가 범위 밖(없는) 노드를 체크할수도 있음
+                int left = 2 * now + 1;
+                int right = 2 * now + 2;
+
+                int next = now;
+                // 왼쪽값이 현재값보다 크면, 왼쪽으로 이동
+                if (left <= lastIndex && _heap[next] < _heap[left])
+                    next = left;
+                // 오른쪽값이 현재값(현재기준 왼쪽값 포함)보다 크면, 오른쪽으로 간다.
+                if (right <= lastIndex && _heap[next] < _heap[right])
+                    next = right;
+
+                // 왼쪽 오른쪽 모두 현재값보다 작으면 끝
+                if (next == now)
+                    break;
+
+                // 두 값을 교체하자
+                int temp = _heap[now];
+                _heap[now] = _heap[next];
+                _heap[next] = temp;
+
+                // 검사 위치를 이동한다.
+                now = next;
+            }
+
+
+            return ret;
+        }
+
+        public int Count()
+        {
+            return _heap.Count;
+        }
     }
 
     class Program
     {
-        static TreeNode<string> MakeTree()
-        {
-            TreeNode<string> root = new TreeNode<string>() { Data = "R1 개발실" };
-            {
-                {
-                    TreeNode<string> node = new TreeNode<string>() { Data = "디자인팀" };
-                    node.Children.Add(new TreeNode<string>() { Data = "전투" });
-                    node.Children.Add(new TreeNode<string>() { Data = "경제" });
-                    node.Children.Add(new TreeNode<string>() { Data = "스토리" });
-                    root.Children.Add(node);
-                }
-                {
-                    TreeNode<string> node = new TreeNode<string>() { Data = "프로그래밍팀" };
-                    node.Children.Add(new TreeNode<string>() { Data = "서버" });
-                    node.Children.Add(new TreeNode<string>() { Data = "클라" });
-                    node.Children.Add(new TreeNode<string>() { Data = "엔진" });
-                    root.Children.Add(node);
-                }
-                {
-                    TreeNode<string> node = new TreeNode<string>() { Data = "아트팀" };
-                    node.Children.Add(new TreeNode<string>() { Data = "배경" });
-                    node.Children.Add(new TreeNode<string>() { Data = "캐릭터" });
-                    root.Children.Add(node);
-                }
-            }
-            return root;
-        }
-
-        static void PrintTree(TreeNode<string> root)
-        {
-            // 트리의 모든노드를 다 순회하려면? -> 재귀가 편하다.
-            // 일단 나부터 출력
-            Console.WriteLine(root.Data);
-
-            // 자식들도 출력하도록 떠넘김
-            foreach (TreeNode<string> child in root.Children)
-                PrintTree(child);   // 재귀
-        }
-
-
-        // 트리 높이 구하기는 코딩문제로 내기 좋다.
-        static int GetHeight(TreeNode<string> root)
-        {
-            int height = 0;
-
-            foreach (TreeNode<string> child in root.Children)
-            {
-                int newHeight = GetHeight(child) + 1;
-                if (height < newHeight)
-                    height = newHeight;
-                // 위 if문과 동일함
-                // height = Math.Max(height, newHeight);
-            }
-            
-            return height;
-        }
-
         static void Main(string[] args)
         {
-            TreeNode<string> root = MakeTree();
+            PriorityQueue q = new PriorityQueue();
+            q.Push(20);
+            q.Push(10);
+            q.Push(30);
+            q.Push(90);
+            q.Push(40);
 
-            //PrintTree(root);
-            Console.WriteLine(GetHeight(root));
+            while(q.Count() > 0)
+            {
+                Console.WriteLine(q.Pop());
+            }
         }
     }
 }
