@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Exercise
 {
-    class PriorityQueue
+    // 여기 들어가는 모든 타입은 크기비교가 가능하여야 한다.
+    // 크기 비교를 제공하는 인터페이스인 
+    // where T : IComparable<T> 를 구현한 타입들만 들어오게 한다.
+    class PriorityQueue<T> where T : IComparable<T>
     {
-        List<int> _heap = new List<int>();
+        List<T> _heap = new List<T>();
 
-        public void Push(int data)
+        public void Push(T data)
         {
             // 힙의 맨 끝에 새로운 데이터를 삽입
             _heap.Add(data);
@@ -17,11 +21,11 @@ namespace Exercise
             while(now > 0)
             {
                 int next = (now - 1) / 2; // 부모 인덱스 구하기
-                if (_heap[now] < _heap[next])
+                if (_heap[now].CompareTo(_heap[next]) < 0)
                     break; // 부모보다 작아서 못올라간다.
 
                 // 크다면 교체
-                int temp = _heap[now];
+                T temp = _heap[now];
                 _heap[now] = _heap[next];
                 _heap[next] = temp;
 
@@ -31,10 +35,10 @@ namespace Exercise
         }
 
         // 가장 큰 데이터를 넘긴다.
-        public int Pop()
+        public T Pop()
         {
             // 반환할 데이터를 따로 저장
-            int ret = _heap[0];
+            T ret = _heap[0];
 
             // 마지막 데이터를 루트로 이동.
             int lastIndex = _heap.Count - 1;
@@ -52,10 +56,10 @@ namespace Exercise
 
                 int next = now;
                 // 왼쪽값이 현재값보다 크면, 왼쪽으로 이동
-                if (left <= lastIndex && _heap[next] < _heap[left])
+                if (left <= lastIndex && _heap[next].CompareTo(_heap[left]) < 0)
                     next = left;
                 // 오른쪽값이 현재값(현재기준 왼쪽값 포함)보다 크면, 오른쪽으로 간다.
-                if (right <= lastIndex && _heap[next] < _heap[right])
+                if (right <= lastIndex && _heap[next].CompareTo(_heap[right]) < 0)
                     next = right;
 
                 // 왼쪽 오른쪽 모두 현재값보다 작으면 끝
@@ -63,7 +67,7 @@ namespace Exercise
                     break;
 
                 // 두 값을 교체하자
-                int temp = _heap[now];
+                T temp = _heap[now];
                 _heap[now] = _heap[next];
                 _heap[next] = temp;
 
@@ -81,20 +85,35 @@ namespace Exercise
         }
     }
 
+    class Knight : IComparable<Knight>
+    {
+        public int Id { get; set; }
+
+        // IComparable 인터페이스에서 요구하는 구현
+        public int CompareTo(Knight other)
+        {
+            if (Id == other.Id)
+                return 0;
+            // 크기비교 연산자에 따라 오름차순 내림차순 바꿀수 있음.
+            return Id > other.Id ? 1 : -1;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            PriorityQueue q = new PriorityQueue();
-            q.Push(20);
-            q.Push(10);
-            q.Push(30);
-            q.Push(90);
-            q.Push(40);
+            // 꼼수로 -를 붙이면 오름차순 정렬도 가능
+            PriorityQueue<Knight> q = new PriorityQueue<Knight>();
+            q.Push(new Knight() { Id = 20 });
+            q.Push(new Knight() { Id = 30 });
+            q.Push(new Knight() { Id = 40 });
+            q.Push(new Knight() { Id = 10 });
+            q.Push(new Knight() { Id = 5 });
 
             while(q.Count() > 0)
             {
-                Console.WriteLine(q.Pop());
+                Console.WriteLine(q.Pop().Id);
             }
         }
     }
