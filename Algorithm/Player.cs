@@ -61,10 +61,11 @@ namespace Algorithm
 
         private void AStar()
         {
-            // up, left, down, right
-            int[] deltaY = new int[] { -1, 0, 1, 0 };
-            int[] deltaX = new int[] { 0, -1, 0, 1 };
-            int[] cost = new int[] { 1, 1, 1, 1 };
+            // up, left, down, right + UL, DL, DR, UR 4방향 추가
+            int[] deltaY = new int[] { -1, 0, 1, 0, -1, 1, 1, -1 };
+            int[] deltaX = new int[] { 0, -1, 0, 1, -1, -1, 1, 1 };
+            // 상하좌우 1 -> 10 , 대각선 1.4 -> 14
+            int[] cost = new int[] { 10, 10, 10, 10, 14, 14, 14, 14 };
 
             // 점수 매기기
             // F = G + H
@@ -92,9 +93,9 @@ namespace Algorithm
             // 시작점 발견 (에약 진행)
             // 시작점의 경우 G값은 0 (자신이 시작점임)
             // 시작점의 경우 F = H
-            open[PosY, PosX] = Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX);
+            open[PosY, PosX] = 10 * Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX);
             pq.Push(new PQNode() { 
-                F = Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX), 
+                F = 10 * (Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX)), 
                 G = 0, Y = PosY, X = PosX });
             parent[PosY, PosX] = new Pos(PosY, PosX);
 
@@ -134,7 +135,7 @@ namespace Algorithm
                     // 비용 계산
                     // 이전까지 이동했던 G값 + 특정값
                     int g = node.G + cost[i];
-                    int h = Math.Abs(_board.DestY - nextY) + Math.Abs(_board.DestX - nextX);
+                    int h = 10 * (Math.Abs(_board.DestY - nextY) + Math.Abs(_board.DestX - nextX));
                     // 다른 경로에서 더 빠른 길을 이미 찾았으면 스킵.
                     if (open[nextY, nextX] < g + h)
                         continue;
@@ -258,13 +259,19 @@ namespace Algorithm
             }
         }
 
-        const int MOVE_TICK = 10; // 100ms = 0.1s
+        const int MOVE_TICK = 30; // 100ms = 0.1s
         int _sumTick = 0;
         int _lastIndex = 0;
         public void Update(int deltaTick)
         {
             if (_lastIndex >= _points.Count)
-                return;
+            {
+                // 도착했으면 맵을 다시 생성
+                _lastIndex = 0;
+                _points.Clear();
+                _board.Initialize(_board.Size, this);
+                Initialize(1, 1, _board);
+            }
 
             // 여긴 1/30초로 들어오면 너무 빠름
             // deltaTick 줄태니 알아서 해라
