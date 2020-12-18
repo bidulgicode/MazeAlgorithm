@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj": {}
+    "C:\\Users\\MikumiX\\Documents\\Repos\\MazeAlgorithm\\Algorithm\\Algorithm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj": {
+    "C:\\Users\\MikumiX\\Documents\\Repos\\MazeAlgorithm\\Algorithm\\Algorithm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj",
+        "projectUniqueName": "C:\\Users\\MikumiX\\Documents\\Repos\\MazeAlgorithm\\Algorithm\\Algorithm.csproj",
         "projectName": "Algorithm",
-        "projectPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\Algorithm.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\Algorithm\\Algorithm\\obj\\",
+        "projectPath": "C:\\Users\\MikumiX\\Documents\\Repos\\MazeAlgorithm\\Algorithm\\Algorithm.csproj",
+        "packagesPath": "C:\\Users\\MikumiX\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MikumiX\\Documents\\Repos\\MazeAlgorithm\\Algorithm\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MikumiX\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

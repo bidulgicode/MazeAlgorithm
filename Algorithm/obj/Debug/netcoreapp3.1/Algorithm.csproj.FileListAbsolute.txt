@@ -20,3 +20,5 @@ C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1
 C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.AssemblyInfo.cs
 C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.dll
 C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.pdb
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.csproj.CoreCompileInputs.cache
+C:\Users\MikumiX\Documents\Repos\MazeAlgorithm\Algorithm\obj\Debug\netcoreapp3.1\Algorithm.genruntimeconfig.cache
